@@ -4,38 +4,37 @@ public class Main {
 
     public static final int size = 2;
     public static Matrix A;
-    public static Matrix B;
+    public static Vector B;
 
     public static void main(String args[]){
 
         A = new Matrix(size);
-        B = new Matrix(size);
+        B = new Vector(size);
 
-        //populate matrices
+        //populate matrix/vector
         for(int i = 0; i <size; i++){
             for(int j = 0; j < size; j++){
                 A.data[i][j] = 1;
-                B.data[i][j] = 1;
             }
+            B.data[i] = 1;
         }
 
+
         A.printMatrix();
-        B.printMatrix();
-        Matrix C = sequentialMult(A, B);
-        C.printMatrix();
+        B.printVector();
+        Vector C = sequentialMult(A, B);
+        C.printVector();
 
     }
 
-    public static Matrix sequentialMult(Matrix A, Matrix B){
-        Matrix C = new Matrix(size);
+    public static Vector sequentialMult(Matrix A, Vector B){
+        Vector C = new Vector(size);
         for(int r = 0; r < size; r++){
-            for(int c = 0; c < size; c++){
-                int sum = 0;
-                for(int k = 0; k < size; k++){
-                    sum += A.data[r][k]*B.data[k][c];
-                }
-                C.data[r][c]=sum;
+            int sum = 0;
+            for(int k = 0; k < size; k++){
+                sum += A.data[r][k]*B.data[k];
             }
+            C.data[r] = sum;
         }
         return C;
     }
