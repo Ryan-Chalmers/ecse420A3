@@ -2,10 +2,11 @@ package ca.mcgill.esce420.a3;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ArrayQueueNoLock {
 
-    private static int numThreads = 2;
+    private static int numThreads = 4;
     private static int INCREMENT = 0;
 
     /**
@@ -25,8 +26,8 @@ public class ArrayQueueNoLock {
     public static class BoundedQueue<T> {
 
         // Set queue at a length with head and tail together
-        private final int size = 12;
-        private Integer[] items = new Integer[size];
+        private final int size = 3;
+        private AtomicInteger[] items = new AtomicInteger[size];
         private int headIndex = 0;
         private int tailIndex = 0;
 
@@ -34,7 +35,7 @@ public class ArrayQueueNoLock {
         private boolean isShared;
 
         // Similar to lock based algorithms, only enq if the flag is down and set a flag during CS
-        public void enq(Integer item){
+        public void enq(AtomicInteger item){
             while(tailIndex - headIndex >= size){
                 System.out.println("Queue full");
             }
@@ -63,8 +64,8 @@ public class ArrayQueueNoLock {
      * */
     public static class Incrementer implements Runnable{
         int id;
-        BoundedQueue<Integer> queue;
-        public Incrementer(int id, BoundedQueue<Integer> queue){
+        BoundedQueue<AtomicInteger> queue;
+        public Incrementer(int id, BoundedQueue<AtomicInteger> queue){
             this.id = id;
             this.queue = queue;
         }
@@ -73,7 +74,7 @@ public class ArrayQueueNoLock {
         public void run() {
             for(int i = 0; i < 10; i++){
                 // Enq without lock
-                Integer intI = i;
+                AtomicInteger intI = new AtomicInteger(i);
                 queue.enq(intI);
 
                 // Wait random time
