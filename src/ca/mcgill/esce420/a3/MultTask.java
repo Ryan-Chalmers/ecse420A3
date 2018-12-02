@@ -1,7 +1,5 @@
 package ca.mcgill.esce420.a3;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static ca.mcgill.esce420.a3.Main.exec;

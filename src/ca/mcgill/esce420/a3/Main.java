@@ -1,5 +1,7 @@
 package ca.mcgill.esce420.a3;
 
+import com.sun.tools.javac.file.SymbolArchive;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -25,26 +27,25 @@ public class Main {
         }
 
         //Sequentially multipy matrices
-        A.printMatrix();
-        B.printVector();
+        long start = System.currentTimeMillis();
         Vector C = sequentialMult(A, B);
-        C.printVector();
+        long end = System.currentTimeMillis();
+        long duration = end - start;
+        System.out.println("Sequential: " + duration);
+
 
         try {
-            multiply(A, B).printVector();
+            start = System.nanoTime();
+            multiply(A, B);
+            end = System.nanoTime();
+            duration = end - start;
+            System.out.println("Parallel: " + duration);
         } catch (Exception e){
             e.printStackTrace();
         }
 
     }
 
-    public static Vector add(Vector A, Vector B) throws Exception{
-        int length = B.getLength();
-        Vector C = new Vector(length);
-        Future<?> future = exec.submit(new AddTask(A,B,C));
-        future.get();
-        return C;
-    }
 
     public static Vector multiply(Matrix A, Vector B) throws Exception {
         int length = B.getLength();
