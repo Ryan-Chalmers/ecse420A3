@@ -1,13 +1,12 @@
 package ca.mcgill.esce420.a3;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Main {
 
-    public static final int size = 2;
+    public static final int size = 8;
     public static Matrix A;
     public static Vector B;
     static ExecutorService exec = Executors.newCachedThreadPool();
@@ -25,14 +24,26 @@ public class Main {
             B.data[i] = 1;
         }
 
-
+        //Sequentially multipy matrices
         A.printMatrix();
         B.printVector();
         Vector C = sequentialMult(A, B);
         C.printVector();
 
+        try {
+            multiply(A, B).printVector();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
+    }
 
+    public static Vector add(Vector A, Vector B) throws Exception{
+        int length = B.getLength();
+        Vector C = new Vector(length);
+        Future<?> future = exec.submit(new AddTask(A,B,C));
+        future.get();
+        return C;
     }
 
     public static Vector multiply(Matrix A, Vector B) throws Exception {
