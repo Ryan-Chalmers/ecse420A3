@@ -24,7 +24,7 @@ public class Main {
             B.data[i] = 1;
         }
 
-        //Sequentially multipy matrices
+        //Sequentially multipy matrices, and time the execution
         long start = System.currentTimeMillis();
         Vector C = sequentialMult(A, B);
         long end = System.currentTimeMillis();
@@ -32,6 +32,7 @@ public class Main {
         System.out.println("Sequential: " + duration);
 
 
+        //Multiply matrices in parallel and time the execution
         try {
             start = System.currentTimeMillis();
             multiply(A, B);
@@ -44,7 +45,7 @@ public class Main {
 
     }
 
-
+    //Parallel Matrix multiplication
     public static Vector multiply(Matrix A, Vector B) throws Exception {
         int length = B.getLength();
         Vector C = new Vector(length);
@@ -53,6 +54,7 @@ public class Main {
         return C;
     }
 
+    //Simple sequential matrix multiplication
     public static Vector sequentialMult(Matrix A, Vector B){
         Vector C = new Vector(size);
         for(int r = 0; r < size; r++){
@@ -64,6 +66,6 @@ public class Main {
         }
         return C;
     }
-    
+
 
 }
