@@ -1,14 +1,12 @@
 package ca.mcgill.esce420.a3;
 
-import com.sun.tools.javac.file.SymbolArchive;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class Main {
 
-    public static final int size = 8;
+    public static final int size = 2000;
     public static Matrix A;
     public static Vector B;
     static ExecutorService exec = Executors.newCachedThreadPool();
@@ -35,9 +33,9 @@ public class Main {
 
 
         try {
-            start = System.nanoTime();
+            start = System.currentTimeMillis();
             multiply(A, B);
-            end = System.nanoTime();
+            end = System.currentTimeMillis();
             duration = end - start;
             System.out.println("Parallel: " + duration);
         } catch (Exception e){
@@ -66,7 +64,6 @@ public class Main {
         }
         return C;
     }
-
-
+    
 
 }

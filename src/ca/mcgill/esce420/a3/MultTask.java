@@ -19,8 +19,9 @@ public class MultTask implements Runnable {
 
     public void run(){
         try{
-            if(A.getDim() == 1){
-                C.set(0, A.get(0,0)*B.get(0));
+            if(A.getDim() <= 250){
+//                C.set(0, A.get(0,0)*B.get(0));
+               C = Main.sequentialMult(A, B);
             } else {
                 Matrix AA[][] = A.split();
                 Vector BB[] = B.split();
